@@ -1,0 +1,202 @@
+@font-face {
+    font-family: 'Gmarket Sans';    font-style: normal;    font-weight: 700;
+    src: local('Gmarket Sans Bold'), local('GmarketSans-Bold'),
+    url('http://script.ebay.co.kr/fonts/GmarketSansBold.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('http://script.ebay.co.kr/fonts/GmarketSansBold.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+@font-face {
+    font-family: 'Gmarket Sans';    font-style: normal;    font-weight: 500;
+    src: local('Gmarket Sans Medium'), local('GmarketSans-Medium'),
+    url('http://script.ebay.co.kr/fonts/GmarketSansMedium.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('http://script.ebay.co.kr/fonts/GmarketSansMedium.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+@font-face {
+    font-family: 'Gmarket Sans';    font-style: normal;    font-weight: 300;
+    src: local('Gmarket Sans Light'), local('GmarketSans-Light'),
+    url('http://script.ebay.co.kr/fonts/GmarketSansLight.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('http://script.ebay.co.kr/fonts/GmarketSansLight.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+    color: #333;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+button{
+    background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer}
+
+/**/
+/*html, body, .container{
+    height: 100%;
+}*/
+
+.container{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media(max-width:1500px){
+    .container{
+        transform: scale(90%);
+    }
+}
+
+.wrap-game-info_session{
+    display: flex;
+    width: 500px;
+    justify-content: space-between;
+}
+
+.level-select{
+    display: flex;
+}
+
+.item-level{
+    font-family: 'Gmarket Sans';
+    font-size: 20px;
+    font-weight: 500;
+    margin-right: 16px;
+}
+
+.select-blue{
+    font-weight: 500;
+    color: #2290F6;
+}
+
+.time-reset-sort{
+    display: flex;
+    font-family: 'Gmarket Sans';
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.reset{
+    margin-left: 16px;
+}
+
+.sudoku_session{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    border: 2px solid #333;
+    width: 500px;
+    height: 500px;
+    margin-top: 22px;
+}
+
+.wrap-block{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    border: 2px solid #333;
+}
+
+.cell{
+    /*display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #DDD;
+    text-align: center;
+    font-size: 32px;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-num-select{
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 22px;    
+}
+
+.item-num{
+    text-align: center;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    border: 3px solid #333;
+    border-radius: 5px;
+}
+
+.select-btn-blue{
+    border: 3px solid #2290F6;
+    color: #2290F6;
+}
+
+.wrap-icon_sesseion{
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    margin-top: 22px;
+}
+
+.wrap-sound-icon{
+    font-size: 24px;
+}
+
+.fa-volume-low{
+    margin-right: 8px;
+}
+
+.wrap-hint-icon{
+    font-size: 24px;
+}
+
+.fa-lightbulb{
+    margin-left: 8px;
+}
+
+.fa-eraser{
+    margin-left: 8px;
+}
+
+.fa-pen{
+    margin-left: 8px;
+}
