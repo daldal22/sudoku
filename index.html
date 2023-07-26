@@ -1,1 +1,157 @@
-<h1>SUDOKU</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUDOKU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://kit.fontawesome.com/f76342c0c3.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <div class="wrap-game-info_session">
+        <div class="level-select">
+            <p class="item-level select-blue" >쉬움</p>
+            <p class="item-level">보통</p>
+            <p class="item-level">어려움</p>
+        </div>
+        <div class="time-reset-sort">
+            <p class="timer">00:00</p>
+            <p class="reset">reset</p>
+        </div>
+    </div>
+    <div class="sudoku_session">
+        <!-- <div class="wrap-block">
+            <p class="cell"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+        </div>
+        <div class="wrap-block">
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+        </div>
+        <div class="wrap-block">
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+        </div>
+        <div class="wrap-block">
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+        </div>
+        <div class="wrap-block">
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+        </div>
+        <div class="wrap-block">
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+        </div>
+        <div class="wrap-block">
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+        </div>
+        <div class="wrap-block">
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+        </div>
+        <div class="wrap-block">
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"></p>
+            <p class="item-sudoku-block"> </p>
+            <p class="item-sudoku-block"> </p>
+        </div> -->
+    </div>
+    <div class="btn-num-select">
+        <button class="item-num select-btn-blue">1</button>
+        <button class="item-num">2</button>
+        <button class="item-num">3</button>
+        <button class="item-num">4</button>
+        <button class="item-num">5</button>
+        <button class="item-num">6</button>
+        <button class="item-num">7</button>
+        <button class="item-num">8</button>
+        <button class="item-num">9</button>
+    </div>
+    <div class="wrap-icon_sesseion">
+        <div class="wrap-sound-icon">
+            <i class="fa-solid fa-volume-low"></i>
+            <i class="fa-solid fa-music"></i>
+        </div>
+        <div class="wrap-hint-icon">
+            <i class="fa-solid fa-rotate-right"></i>
+            <i class="fa-solid fa-pen"></i>
+            <i class="fa-solid fa-eraser"></i>
+            <i class="fa-regular fa-lightbulb"></i>
+        </div>
+    </div>
+</div>
+</body>
+</html>
