@@ -25,45 +25,44 @@ const sudoku = [
 </div> */}
 
 const $board = document.querySelector('.sudoku_session');
-const $number = [1,2,3,4,5,6,7,8,9]
 
 
 
-function randomCreate(){
-    for(let i = 0; i < 9; i++){
-        for(let j = 0; j < 9; j++){
-            const randomIndex = Math.floor(Math.random() * $number.length);
-            const randomNum = $number[randomIndex];
-            sudoku[i][j] = randomNum;
-        }
-        // 숫자가 랜덤 생성되긴 하는데 중복 숫자가 출력됌
-    }
-    
-}
+function render() {
+    $board.innerHTML = '';
+  
+    sudoku.forEach((row) => {
+      row.forEach((cellValue) => {
+        const $cell = document.createElement('p');
+        $cell.classList.add('cell');
+        if (cellValue !== 0) $cell.textContent = cellValue;
+        $board.appendChild($cell);
+      });
+    });
+  }
 
-function render(){
-    sudoku.forEach((block) => {
-        const $block = document.createElement('div');
-        $block.classList.add('wrap-block');
 
-        block.forEach((cellValue) => {
-            const $cell = document.createElement('p');
-            $cell.classList.add('cell');
-            if (cellValue !== 0) $cell.textContent = cellValue;
-            else $cell.textContent = '';      
-            $block.appendChild($cell);
-        })
+// function render(){
+//     $board.innerHTML = ''
+//     sudoku.forEach((block) => {
+//         const $block = document.createElement('div');
+//         $block.classList.add('wrap-block');
 
-        $board.appendChild($block);
-    })
-}
+//         block.forEach((cellValue) => {
+//             const $cell = document.createElement('p');
+//             $cell.classList.add('cell');
+//             if (cellValue !== 0) $cell.textContent = cellValue;
+//             else $cell.textContent = '';      
+//             $block.appendChild($cell);
+//         })
+
+//         $board.appendChild($block);
+//     })
+// }
 
 
 
 // 랜덤 스도쿠 생성할 때는 줄 단위로 생성하는 코드 작성
 // 완성할때 칸단위로 다시 배열을 생성하면 위 코드 쓸 수 있음
 
-// 스도쿠 랜덤 생성 알고리즘 만들어오기 못해도 만들어보고 오답노트 만들기
-
-randomCreate()
 render()
