@@ -117,35 +117,31 @@ button{
     margin-left: 16px;
 }
 
-.sudoku_session{
+.sudoku_session {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
     border: 2px solid #333;
     width: 500px;
     height: 500px;
     margin-top: 22px;
-}
+  }
 
-.wrap-block{
+.wrap-block {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     border: 2px solid #333;
-}
+  }
 
-.cell{
-    /*display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;*/
+.cell {
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #DDD;
-    text-align: center;
-    font-size: 32px;
+    font-size: 20px;
     font-family: 'Inter', sans-serif;
-}
+  }
 
 .btn-num-select{
     width: 500px;
