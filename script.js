@@ -26,43 +26,90 @@ const sudoku = [
 
 const $board = document.querySelector('.sudoku_session');
 
-
-
 function render() {
     $board.innerHTML = '';
   
-    sudoku.forEach((row) => {
-      row.forEach((cellValue) => {
-        const $cell = document.createElement('p');
-        $cell.classList.add('cell');
-        if (cellValue !== 0) $cell.textContent = cellValue;
-        $board.appendChild($cell);
-      });
-    });
+    const blockSize = 3;
+  
+    for (let i = 0; i < 9; i += blockSize) {
+      for (let j = 0; j < 9; j += blockSize) {
+        const $block = document.createElement('div');
+        $block.classList.add('wrap-block');
+  
+        for (let row = i; row < i + blockSize; row++) {
+          for (let col = j; col < j + blockSize; col++) {
+            const cellValue = sudoku[row][col];
+            const $cell = document.createElement('p');
+            $cell.classList.add('cell');
+            if (cellValue !== 0) $cell.textContent = cellValue;
+            $block.appendChild($cell);
+          }
+        }
+  
+        $board.appendChild($block);
+      }
+    }
+  }
+  
+function rowSwap(sudoku, row1, row2) {
+  const temp = sudoku[row1];
+  sudoku[row1] = sudoku[row2];
+  sudoku[row2] = temp;
+}
+
+function colSwap(sudoku, col1, col2) {
+    for (let i = 0; i < 9; i++) {
+      const temp = sudoku[i][col1];
+      sudoku[i][col1] = sudoku[i][col2];
+      sudoku[i][col2] = temp;
+    }
   }
 
+function rowBlockSwap(sudoku, block1Row, block2Row) {
+    for (let i = 0; i < 3; i++) {
+        const temp = sudoku[block1Row * 3 + i];
+        sudoku[block1Row * 3 + i] = sudoku[block2Row * 3 + i];
+        sudoku[block2Row * 3 + i] = temp;
+    }
+}
 
-// function render(){
-//     $board.innerHTML = ''
-//     sudoku.forEach((block) => {
-//         const $block = document.createElement('div');
-//         $block.classList.add('wrap-block');
+function colBlockSwap(sudoku, block1Col, block2Col){
+    for(let i = 0; i < 9; i++){
+        for(let j = 0; j < 3; j++){
+            const temp = sudoku[i][block1Col * 3 + j];
+            sudoku[i][block1Col * 3 + j] = sudoku[i][block2Col * 3 + j];
+            sudoku[i][block2Col * 3 + j] = temp;
+        }
+    }
+}
 
-//         block.forEach((cellValue) => {
-//             const $cell = document.createElement('p');
-//             $cell.classList.add('cell');
-//             if (cellValue !== 0) $cell.textContent = cellValue;
-//             else $cell.textContent = '';      
-//             $block.appendChild($cell);
-//         })
+function randomSwap(sudoku, num1, num2) {
+    const row = Math.floor(Math.random() * 9);
+    const num1Position = sudoku[row].indexOf(num1);
+    const num2Position = sudoku[row].indexOf(num2);
+  
+    if (num1Position !== -1 && num2Position !== -1) {
+        const temp = sudoku[row][num1Position];
+        sudoku[row][num1Position] = sudoku[row][num2Position];
+        sudoku[row][num2Position] = temp;
+    }
+  }
+  
 
-//         $board.appendChild($block);
-//     })
-// }
+function rotate(sudoku){
 
+}
 
+// :3줄 안에서 1줄씩 바꾸기(행)
+// :3줄 안에서 1줄씩 바꾸기
+// : 3줄(단)간격(행)
+// : 3줄(단)간격(열)
+// : 랜덤숫자2개 바꾸기
+// : 회전하기
 
-// 랜덤 스도쿠 생성할 때는 줄 단위로 생성하는 코드 작성
-// 완성할때 칸단위로 다시 배열을 생성하면 위 코드 쓸 수 있음
-
+//rowSwap(sudoku, 0, 2)
+//colSwap(sudoku, 0, 1)
+//rowBlockSwap(sudoku, 0,1)
+//colBlockSwap(sudoku,0,2)
+randomSwap(sudoku, 3,8)
 render()
