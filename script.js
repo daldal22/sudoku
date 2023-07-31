@@ -84,15 +84,15 @@ function colBlockSwap(sudoku, block1Col, block2Col){
 }
 
 function randomSwap(sudoku, num1, num2) {
-    const row = Math.floor(Math.random() * 9);
-    const num1Position = sudoku[row].indexOf(num1);
-    const num2Position = sudoku[row].indexOf(num2);
+    for(let i = 0; i < 9; i++){
+    const num1Position = sudoku[i].indexOf(num1);
+    const num2Position = sudoku[i].indexOf(num2);
   
     if (num1Position !== -1 && num2Position !== -1) {
-        const temp = sudoku[row][num1Position];
-        sudoku[row][num1Position] = sudoku[row][num2Position];
-        sudoku[row][num2Position] = temp;
-    }
+        const temp = sudoku[i][num1Position];
+        sudoku[i][num1Position] = sudoku[i][num2Position];
+        sudoku[i][num2Position] = temp;
+    }}
   }
   
 
@@ -111,5 +111,5 @@ function rotate(sudoku){
 //colSwap(sudoku, 0, 1)
 //rowBlockSwap(sudoku, 0,1)
 //colBlockSwap(sudoku,0,2)
-randomSwap(sudoku, 3,8)
+randomSwap(sudoku, 1,2)
 render()
