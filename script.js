@@ -127,5 +127,5 @@ function randomSwap(sudoku, num1, num2) {
 //rowBlockSwap(sudoku, 0,1)
 //colBlockSwap(sudoku,0,2)
 //randomSwap(sudoku, 1,2)
-rotate(sudoku,1)
+//rotate(sudoku,1)
 render()
