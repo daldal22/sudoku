@@ -111,8 +111,6 @@ function randomSwap(sudoku, num1, num2) {
         }
       }
     }
-  
-    return rotated;
   }
 
 // :3줄 안에서 1줄씩 바꾸기(행)
@@ -127,5 +125,5 @@ function randomSwap(sudoku, num1, num2) {
 //rowBlockSwap(sudoku, 0,1)
 //colBlockSwap(sudoku,0,2)
 //randomSwap(sudoku, 1,2)
-//rotate(sudoku,1)
+rotate(sudoku,2)
 render()
