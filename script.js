@@ -94,11 +94,26 @@ function randomSwap(sudoku, num1, num2) {
         sudoku[i][num2Position] = temp;
     }}
   }
+
+  function rotate(sudoku, rotationCount) {
+    const rotated = Array.from({ length: 9 }, () => Array(9).fill(0));
   
-
-function rotate(sudoku){
-
-}
+    for (let k = 0; k < rotationCount; k++) {
+      for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+          rotated[i][j] = sudoku[9 - j - 1][i];
+        }
+      }
+  
+      for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+          sudoku[i][j] = rotated[i][j];
+        }
+      }
+    }
+  
+    return rotated;
+  }
 
 // :3줄 안에서 1줄씩 바꾸기(행)
 // :3줄 안에서 1줄씩 바꾸기
@@ -111,5 +126,6 @@ function rotate(sudoku){
 //colSwap(sudoku, 0, 1)
 //rowBlockSwap(sudoku, 0,1)
 //colBlockSwap(sudoku,0,2)
-randomSwap(sudoku, 1,2)
+//randomSwap(sudoku, 1,2)
+rotate(sudoku,1)
 render()
