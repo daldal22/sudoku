@@ -1,4 +1,4 @@
-const sudoku = [
+let sudoku = [
     [8,1,9,4,5,2,3,6,7],
     [2,4,3,8,7,6,5,1,9],
     [7,6,5,1,9,3,8,4,2],
@@ -27,91 +27,128 @@ const sudoku = [
 const $board = document.querySelector('.sudoku_session');
 
 function render() {
-    $board.innerHTML = '';
+    $board.innerHTML = ''; // 스도쿠 보드 초기화
   
-    const blockSize = 3;
+    for (let i = 0; i < 9; i++) {
+      const $block = document.createElement('div');
+      $block.classList.add('wrap-block');
   
-    for (let i = 0; i < 9; i += blockSize) {
-      for (let j = 0; j < 9; j += blockSize) {
-        const $block = document.createElement('div');
-        $block.classList.add('wrap-block');
+      for (let j = 0; j < 9; j++) {
+        const row = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+        // Math.floor(i / 3) * 3 은 스도쿠 보드 내에서 현재 블록의 첫번째 행 인덱스를 나타냄 0,3,6 중 하나의 값을 가짐 블록을 구분하기 위해 사용
+        // Math.floor(j / 3); 은 현재 블록 내에서 셀의 열 인덱스를 구하는데 사용됌
+        const col = (i % 3) * 3 + (j % 3); 
+        //i % 3 : 현재 블록 내에서 몇 번째 블록의 행에 위치하는지를 나타내는 값
+        //j % 3 : 현재 블록 내에서 몇 번째 블록의 열에 위치하는지를 나타내는 값
+        // 현재 블록 내부에서 각 셀의 열 위치를 나타내는 값을 가지게 된다
+
+        const cellValue = sudoku[row][col];
+        const $cell = document.createElement('p');
+        $cell.classList.add('cell');
+        if (cellValue !== 0) $cell.textContent = cellValue;
+        $block.appendChild($cell);
+      }
   
-        for (let row = i; row < i + blockSize; row++) {
-          for (let col = j; col < j + blockSize; col++) {
-            const cellValue = sudoku[row][col];
-            const $cell = document.createElement('p');
-            $cell.classList.add('cell');
-            if (cellValue !== 0) $cell.textContent = cellValue;
-            $block.appendChild($cell);
+      $board.appendChild($block);
+    }
+  }
+  
+  
+  
+function rowSwap(num) {
+    for (let i = 0; i < num; i++) {
+        const blockIndex = Math.floor(Math.random() * 3);
+        // 0~2까지의 랜덤한 숫자를 변수에 할당함
+        const row1 = blockIndex * 3 + Math.floor(Math.random() * 3);
+        // 랜덤하게 선택된 블록내의 행을 나타냄
+        const row2 = blockIndex * 3 + Math.floor(Math.random() * 3);
+        // 다른 랜덤한 블록 내의 행을 나타냄
+        if (row1 !== row2) {
+            [sudoku[row1], sudoku[row2]] = [sudoku[row2], sudoku[row1]];
+        }
+      }
+}
+
+function colSwap(num) {
+    for (let i = 0; i < num; i++) {
+        const blockIndex = Math.floor(Math.random() * 3);
+        const col1 = blockIndex * 3 + Math.floor(Math.random() * 3);
+        const col2 = blockIndex * 3 + Math.floor(Math.random() * 3);
+        //블록 내에서 랜덤한 열 2개 선택
+
+        if (col1 !== col2) { // 선택한 열이 다를 때 스왑
+          for (let j = 0; j < 9; j++) {
+            const temp = sudoku[j][col1];
+            sudoku[j][col1] = sudoku[j][col2];
+            sudoku[j][col2] = temp;
           }
         }
-  
-        $board.appendChild($block);
       }
-    }
-  }
-  
-function rowSwap(sudoku, row1, row2) {
-  const temp = sudoku[row1];
-  sudoku[row1] = sudoku[row2];
-  sudoku[row2] = temp;
-}
-
-function colSwap(sudoku, col1, col2) {
-    for (let i = 0; i < 9; i++) {
-      const temp = sudoku[i][col1];
-      sudoku[i][col1] = sudoku[i][col2];
-      sudoku[i][col2] = temp;
-    }
   }
 
-function rowBlockSwap(sudoku, block1Row, block2Row) {
-    for (let i = 0; i < 3; i++) {
-        const temp = sudoku[block1Row * 3 + i];
-        sudoku[block1Row * 3 + i] = sudoku[block2Row * 3 + i];
-        sudoku[block2Row * 3 + i] = temp;
+  function rowBlockSwap(num) {
+    for (let k = 0; k < num; k++) {
+      const blockArr = [0, 1, 2];
+      const blockIndex1 = blockArr.splice(Math.floor(Math.random() * 3), 1);
+      // Math.random으로 0, 1, 2 중에서 랜덤하게 정수를 생성한다 랜덤으로 선택한 인덱스의 요소를 1개 제거한다 (선택되지 않게하기 위함)
+      const blockIndex2 = blockArr[Math.floor(Math.random() * 2)];
+      // 남은 인덱스 중에 무작위로 선택된다 이에 해당하는 배열 요소를 선택함 결론은 단 한개의 배열 요소를 랜덤으로 선택하기 위함
+      const temp = sudoku.slice(blockIndex1 * 3, blockIndex1 * 3 + 3);
+      // 블록인덱스1 *3으로 첫번째 블록 인덱스에 해당하는 행의 시작 위치를 나타냄 / 블록인덱스1 *3 +3 으로 행의 끝의 위치를 나타냄
+      sudoku.splice(blockIndex1 * 3, 3, ...sudoku.slice(blockIndex2 * 3, blockIndex2 * 3 + 3));
+      // blockIndex2 * 3, blockIndex2 * 3 + 3 으로 두 번째 블록에 해당하는 3개의 행을 잘라내어 새로운 배열을 만듦
+      // ...sudoku.slice()함으로써 값을 추출해서 개별적으로 만듦
+      // 블록인덱스1의 첫번째 행부터 3개의 요소를 제거하고 ...스도쿠(이하생략) 요소를 추가한다
+      // 첫 번째 블록의 행들을 두 번째 블록의 행들로 바꿔치기하는 작업을 수행
+      sudoku.splice(blockIndex2 * 3, 3, ...temp);
+      // temp에 저장해둔 배열을 추가한다
     }
-}
+  }
 
-function colBlockSwap(sudoku, block1Col, block2Col){
-    for(let i = 0; i < 9; i++){
-        for(let j = 0; j < 3; j++){
-            const temp = sudoku[i][block1Col * 3 + j];
-            sudoku[i][block1Col * 3 + j] = sudoku[i][block2Col * 3 + j];
-            sudoku[i][block2Col * 3 + j] = temp;
+  function colBlockSwap(num) {
+    const blockArr = [0, 1, 2];
+    for (let i = 0; i < num; i++) {
+      const blockIndex1 = blockArr.splice(Math.floor(Math.random() * 3), 1);
+      // Math.random으로 0, 1, 2 중에서 랜덤하게 정수를 생성한다 랜덤으로 선택한 인덱스의 요소를 1개 제거한다 (선택되지 않게하기 위함)
+      const blockIndex2 = blockArr[Math.floor(Math.random() * 2)];
+      // blockArr에서 랜덤하게 선택하여 블록인덱스2에 저장함
+      for (let j = 0; j < 9; j++) {
+        [sudoku[j][blockIndex1 * 3], sudoku[j][blockIndex2 * 3]] = [sudoku[j][blockIndex2 * 3], sudoku[j][blockIndex1 * 3]];
+        // 첫쨰 블록과 두번째 블록의 첫번째 열을 교체함
+        [sudoku[j][blockIndex1 * 3 + 1], sudoku[j][blockIndex2 * 3 + 1]] = [sudoku[j][blockIndex2 * 3 + 1], sudoku[j][blockIndex1 * 3 + 1]];
+        // 두번째 열 교체
+        [sudoku[j][blockIndex1 * 3 + 2], sudoku[j][blockIndex2 * 3 + 2]] = [sudoku[j][blockIndex2 * 3 + 2], sudoku[j][blockIndex1 * 3 + 2]];
+        // 세번째 열 교체
         }
+      blockArr.push(blockIndex1);
     }
-}
-
-function randomSwap(sudoku, num1, num2) {
-    for(let i = 0; i < 9; i++){
-    const num1Position = sudoku[i].indexOf(num1);
-    const num2Position = sudoku[i].indexOf(num2);
-  
-    if (num1Position !== -1 && num2Position !== -1) {
-        const temp = sudoku[i][num1Position];
-        sudoku[i][num1Position] = sudoku[i][num2Position];
-        sudoku[i][num2Position] = temp;
-    }}
   }
+  
+//   function randomSwap(num) {
+//     for(let i = 0; i < 9; i++){
+//     const num1Position = sudoku[i].indexOf(num1);
+//     const num2Position = sudoku[i].indexOf(num2);
+  
+//     if (num1Position !== -1 && num2Position !== -1) {
+//         const temp = sudoku[i][num1Position];
+//         sudoku[i][num1Position] = sudoku[i][num2Position];
+//         sudoku[i][num2Position] = temp;
+//     }}
+//   }
+  
 
-  function rotate(sudoku, rotationCount) {
+  function rotate(num) {
     const rotated = Array.from({ length: 9 }, () => Array(9).fill(0));
   
-    for (let k = 0; k < rotationCount; k++) {
-      for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-          rotated[i][j] = sudoku[9 - j - 1][i];
-        }
-      }
-  
-      for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-          sudoku[i][j] = rotated[i][j];
-        }
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        rotated[i][j] = sudoku[9 - j - 1][i];
       }
     }
+  
+    sudoku = rotated;
   }
+   // k가 안 쓰임 숫자 넣어도 제대로 안 바뀜 제대로 고쳐서 오기
 
 // :3줄 안에서 1줄씩 바꾸기(행)
 // :3줄 안에서 1줄씩 바꾸기
@@ -120,10 +157,16 @@ function randomSwap(sudoku, num1, num2) {
 // : 랜덤숫자2개 바꾸기
 // : 회전하기
 
-//rowSwap(sudoku, 0, 2)
-//colSwap(sudoku, 0, 1)
-//rowBlockSwap(sudoku, 0,1)
-//colBlockSwap(sudoku,0,2)
-//randomSwap(sudoku, 1,2)
-rotate(sudoku,2)
+
+//rowSwap(2) //숫자 1을 넣으면 랜덤으로 1~3블럭에서 행들이 1번 바뀌고 4~6, 7~9에서도 행이 1번 바뀌어야함 완전 랜덤으로
+//colSwap(2)
+//rowBlockSwap(2)
+//colBlockSwap(2)
+randomSwap(2)
+//rotate(2)
 render()
+
+// for문 2중 포문까지
+// 랜덤함수 전부 모아서 크리에이트(가제)라는 함수를 만들기???
+// 전부 고쳐서 오기
+// 목욜날 수업듣고 월요일까지 빈칸 만드는 코드 만들기 (만약 빈칸 만들고 시간 남으면 빈칸 선택된 구역 색 넣는 기능 구현하기)
