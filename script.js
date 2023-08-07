@@ -55,36 +55,51 @@ function render() {
   
   
   
-function rowSwap(num) {
+  function rowSwap(num) {
+    const blockArr = [0, 1, 2];
+    
     for (let i = 0; i < num; i++) {
-        const blockIndex = Math.floor(Math.random() * 3);
-        // 0~2까지의 랜덤한 숫자를 변수에 할당함
-        const row1 = blockIndex * 3 + Math.floor(Math.random() * 3);
-        // 랜덤하게 선택된 블록내의 행을 나타냄
-        const row2 = blockIndex * 3 + Math.floor(Math.random() * 3);
-        // 다른 랜덤한 블록 내의 행을 나타냄
-        if (row1 !== row2) {
-            [sudoku[row1], sudoku[row2]] = [sudoku[row2], sudoku[row1]];
-        }
+      const blockIndex = blockArr.splice(Math.floor(Math.random() * blockArr.length), 1);
+  
+      const row1 = blockIndex * 3 + Math.floor(Math.random() * 3);
+      let row2 = blockIndex * 3 + Math.floor(Math.random() * 3);
+      // while문 사용해서 값을 변경할 것이기 때문에 let을 쓴다
+  
+      while (row2 === row1) {
+        row2 = blockIndex * 3 + Math.floor(Math.random() * 3);
       }
-}
-
-function colSwap(num) {
-    for (let i = 0; i < num; i++) {
-        const blockIndex = Math.floor(Math.random() * 3);
-        const col1 = blockIndex * 3 + Math.floor(Math.random() * 3);
-        const col2 = blockIndex * 3 + Math.floor(Math.random() * 3);
-        //블록 내에서 랜덤한 열 2개 선택
-
-        if (col1 !== col2) { // 선택한 열이 다를 때 스왑
-          for (let j = 0; j < 9; j++) {
-            const temp = sudoku[j][col1];
-            sudoku[j][col1] = sudoku[j][col2];
-            sudoku[j][col2] = temp;
-          }
-        }
-      }
+  
+      [sudoku[row1], sudoku[row2]] = [sudoku[row2], sudoku[row1]];
+  
+      blockArr.push(blockIndex);
+    }
   }
+  
+  
+
+  function colSwap(num) {
+    const blockArr = [0, 1, 2];
+    
+    for (let i = 0; i < num; i++) {
+      const blockIndex = blockArr.splice(Math.floor(Math.random() * 3), 1);
+  
+      const col1 = blockIndex * 3 + Math.floor(Math.random() * 3);
+      let col2 = blockIndex * 3 + Math.floor(Math.random() * 3);
+  
+      while (col2 === col1) {
+        col2 = blockIndex * 3 + Math.floor(Math.random() * 3);
+      }
+  
+      for (let j = 0; j < 9; j++) {
+        const temp = sudoku[j][col1];
+        sudoku[j][col1] = sudoku[j][col2];
+        sudoku[j][col2] = temp;
+      }
+  
+      blockArr.push(blockIndex);
+    }
+  }
+  
 
   function rowBlockSwap(num) {
     for (let k = 0; k < num; k++) {
@@ -124,31 +139,40 @@ function colSwap(num) {
     }
   }
   
-//   function randomSwap(num) {
-//     for(let i = 0; i < 9; i++){
-//     const num1Position = sudoku[i].indexOf(num1);
-//     const num2Position = sudoku[i].indexOf(num2);
+  function randomSwap(num) {
+    for (let i = 0; i < num; i++) {
+      const num1 = Math.floor(Math.random() * 9) + 1;
+      const num2 = Math.floor(Math.random() * 9) + 1;
   
-//     if (num1Position !== -1 && num2Position !== -1) {
-//         const temp = sudoku[i][num1Position];
-//         sudoku[i][num1Position] = sudoku[i][num2Position];
-//         sudoku[i][num2Position] = temp;
-//     }}
-//   }
+      for (let j = 0; j < 9; j++) {
+        const num1Position = sudoku[j].indexOf(num1);
+        const num2Position = sudoku[j].indexOf(num2);
+  
+        if (num1Position !== -1 && num2Position !== -1) {
+          const temp = sudoku[j][num1Position];
+          sudoku[j][num1Position] = sudoku[j][num2Position];
+          sudoku[j][num2Position] = temp;
+        }
+      }
+    }
+  }  
   
 
   function rotate(num) {
-    const rotated = Array.from({ length: 9 }, () => Array(9).fill(0));
+    for (let k = 0; k < num; k++) {
+      const rotated = Array.from({ length: 9 }, () => Array(9).fill(0));
   
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        rotated[i][j] = sudoku[9 - j - 1][i];
+      for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+          rotated[i][j] = sudoku[9 - j - 1][i];
+        }
       }
-    }
   
-    sudoku = rotated;
-  }
+      sudoku = rotated;
+    }
+  } 
    // k가 안 쓰임 숫자 넣어도 제대로 안 바뀜 제대로 고쳐서 오기
+   // 이거 도저히 k 안 쓰고 못 바꾸겠어요 방법이 안 떠올라요ㅠㅠㅠ
 
 // :3줄 안에서 1줄씩 바꾸기(행)
 // :3줄 안에서 1줄씩 바꾸기
@@ -162,8 +186,8 @@ function colSwap(num) {
 //colSwap(2)
 //rowBlockSwap(2)
 //colBlockSwap(2)
-randomSwap(2)
-//rotate(2)
+//randomSwap(2)
+rotate()
 render()
 
 // for문 2중 포문까지
