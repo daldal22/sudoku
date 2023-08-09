@@ -53,41 +53,46 @@ function render() {
     }
   }
   
-  
+  function randomNum(num){
+    return Math.floor(Math.random()* num)
+  }
+  // 랜덤한 정수 생성하는 함수 0 ~ (num -1)
+
+  function execute(func, count){
+    if(count === 0) return
+    func()
+    return execute(func, count-1)
+  }
+  // func라는 함수를 count 횟수만큼 호출함 카운트가 0이 되면 멈춤
   
   function rowSwap(num) {
-    const blockArr = [0, 1, 2];
-    
     for (let i = 0; i < num; i++) {
-      const blockIndex = blockArr.splice(Math.floor(Math.random() * blockArr.length), 1);
-  
-      const row1 = blockIndex * 3 + Math.floor(Math.random() * 3);
-      let row2 = blockIndex * 3 + Math.floor(Math.random() * 3);
-      // while문 사용해서 값을 변경할 것이기 때문에 let을 쓴다
-  
-      while (row2 === row1) {
-        row2 = blockIndex * 3 + Math.floor(Math.random() * 3);
+      const blockIndex = randomNum(3) * 3;
+      // 블록인덱스가 어떤 기능하는지 주석 달기
+
+      const row1 = blockIndex + randomNum(3);
+      let row2
+   
+      while (true) {
+        row2 = blockIndex + randomNum(3);
+        if(row1 !== row2) break;
       }
   
       [sudoku[row1], sudoku[row2]] = [sudoku[row2], sudoku[row1]];
   
-      blockArr.push(blockIndex);
     }
   }
   
-  
-
-  function colSwap(num) {
-    const blockArr = [0, 1, 2];
-    
+  function colSwap(num) {  
     for (let i = 0; i < num; i++) {
-      const blockIndex = blockArr.splice(Math.floor(Math.random() * 3), 1);
+      const blockIndex = randomNum(3) * 3;
   
-      const col1 = blockIndex * 3 + Math.floor(Math.random() * 3);
-      let col2 = blockIndex * 3 + Math.floor(Math.random() * 3);
+      const col1 = blockIndex * 3 + randomNum(3);
+      let col2
   
-      while (col2 === col1) {
-        col2 = blockIndex * 3 + Math.floor(Math.random() * 3);
+      while (true) {
+        col2 = blockIndex * 3 + randomNum(3);
+        if(col1 !== col2) break;
       }
   
       for (let j = 0; j < 9; j++) {
@@ -95,71 +100,72 @@ function render() {
         sudoku[j][col1] = sudoku[j][col2];
         sudoku[j][col2] = temp;
       }
-  
-      blockArr.push(blockIndex);
+
     }
   }
   
 
   function rowBlockSwap(num) {
-    for (let k = 0; k < num; k++) {
-      const blockArr = [0, 1, 2];
-      const blockIndex1 = blockArr.splice(Math.floor(Math.random() * 3), 1);
-      // Math.random으로 0, 1, 2 중에서 랜덤하게 정수를 생성한다 랜덤으로 선택한 인덱스의 요소를 1개 제거한다 (선택되지 않게하기 위함)
-      const blockIndex2 = blockArr[Math.floor(Math.random() * 2)];
-      // 남은 인덱스 중에 무작위로 선택된다 이에 해당하는 배열 요소를 선택함 결론은 단 한개의 배열 요소를 랜덤으로 선택하기 위함
-      const temp = sudoku.slice(blockIndex1 * 3, blockIndex1 * 3 + 3);
-      // 블록인덱스1 *3으로 첫번째 블록 인덱스에 해당하는 행의 시작 위치를 나타냄 / 블록인덱스1 *3 +3 으로 행의 끝의 위치를 나타냄
-      sudoku.splice(blockIndex1 * 3, 3, ...sudoku.slice(blockIndex2 * 3, blockIndex2 * 3 + 3));
-      // blockIndex2 * 3, blockIndex2 * 3 + 3 으로 두 번째 블록에 해당하는 3개의 행을 잘라내어 새로운 배열을 만듦
-      // ...sudoku.slice()함으로써 값을 추출해서 개별적으로 만듦
-      // 블록인덱스1의 첫번째 행부터 3개의 요소를 제거하고 ...스도쿠(이하생략) 요소를 추가한다
-      // 첫 번째 블록의 행들을 두 번째 블록의 행들로 바꿔치기하는 작업을 수행
-      sudoku.splice(blockIndex2 * 3, 3, ...temp);
-      // temp에 저장해둔 배열을 추가한다
+    for (let i = 0; i < num; i++) {
+      const blockIndex1 = randomNum(3) * 3;
+      let blockIndex2
+
+      while(true){
+        blockIndex2 = randomNum(3) * 3;
+        if(blockIndex1 !== blockIndex2) break;
+      }
+
+      const temp = sudoku.slice(blockIndex1, blockIndex1 + 3);
+      sudoku.splice(blockIndex1, 3, ...sudoku.slice(blockIndex2, blockIndex2 + 3));
+      sudoku.splice(blockIndex2, 3, ...temp);
     }
   }
 
   function colBlockSwap(num) {
-    const blockArr = [0, 1, 2];
     for (let i = 0; i < num; i++) {
-      const blockIndex1 = blockArr.splice(Math.floor(Math.random() * 3), 1);
-      // Math.random으로 0, 1, 2 중에서 랜덤하게 정수를 생성한다 랜덤으로 선택한 인덱스의 요소를 1개 제거한다 (선택되지 않게하기 위함)
-      const blockIndex2 = blockArr[Math.floor(Math.random() * 2)];
-      // blockArr에서 랜덤하게 선택하여 블록인덱스2에 저장함
+      const blockIndex1 = randomNum(3) * 3;
+      let blockIndex2;
+  
+      while (true) {
+        blockIndex2 = randomNum(3) * 3;
+        if (blockIndex1 !== blockIndex2) break;
+      }
+  
       for (let j = 0; j < 9; j++) {
-        [sudoku[j][blockIndex1 * 3], sudoku[j][blockIndex2 * 3]] = [sudoku[j][blockIndex2 * 3], sudoku[j][blockIndex1 * 3]];
-        // 첫쨰 블록과 두번째 블록의 첫번째 열을 교체함
-        [sudoku[j][blockIndex1 * 3 + 1], sudoku[j][blockIndex2 * 3 + 1]] = [sudoku[j][blockIndex2 * 3 + 1], sudoku[j][blockIndex1 * 3 + 1]];
-        // 두번째 열 교체
-        [sudoku[j][blockIndex1 * 3 + 2], sudoku[j][blockIndex2 * 3 + 2]] = [sudoku[j][blockIndex2 * 3 + 2], sudoku[j][blockIndex1 * 3 + 2]];
-        // 세번째 열 교체
-        }
-      blockArr.push(blockIndex1);
+        [sudoku[j][blockIndex1], sudoku[j][blockIndex2]] = [sudoku[j][blockIndex2], sudoku[j][blockIndex1]];
+        [sudoku[j][blockIndex1 + 1], sudoku[j][blockIndex2 + 1]] = [sudoku[j][blockIndex2 + 1], sudoku[j][blockIndex1 + 1]];
+        [sudoku[j][blockIndex1 + 2], sudoku[j][blockIndex2 + 2]] = [sudoku[j][blockIndex2 + 2], sudoku[j][blockIndex1 + 2]];
+      }
     }
   }
   
+  
   function randomSwap(num) {
     for (let i = 0; i < num; i++) {
-      const num1 = Math.floor(Math.random() * 9) + 1;
-      const num2 = Math.floor(Math.random() * 9) + 1;
-  
+      const num1 = randomNum(9) + 1;
+      let num2;
+      
+      while(true){
+        num2 = randomNum(9) + 1;
+        if(num1 !== num2) break;
+      }
+
       for (let j = 0; j < 9; j++) {
-        const num1Position = sudoku[j].indexOf(num1);
-        const num2Position = sudoku[j].indexOf(num2);
+        const num1Index = sudoku[j].indexOf(num1);
+        const num2Index = sudoku[j].indexOf(num2);
   
-        if (num1Position !== -1 && num2Position !== -1) {
-          const temp = sudoku[j][num1Position];
-          sudoku[j][num1Position] = sudoku[j][num2Position];
-          sudoku[j][num2Position] = temp;
-        }
+        const temp = sudoku[j][num1Index];
+        sudoku[j][num1Index] = sudoku[j][num2Index];
+        sudoku[j][num2Index] = temp;
+        
       }
     }
   }  
   
 
-  function rotate(num) {
-    for (let k = 0; k < num; k++) {
+  function rotate() {
+ //while문으로 바꾸기, 재귀함수로 쓰는 방법도 있음
+      // 호출할 때 여러번 호출하는 함수로...?
       const rotated = Array.from({ length: 9 }, () => Array(9).fill(0));
   
       for (let i = 0; i < 9; i++) {
@@ -169,10 +175,16 @@ function render() {
       }
   
       sudoku = rotated;
-    }
+  
   } 
-   // k가 안 쓰임 숫자 넣어도 제대로 안 바뀜 제대로 고쳐서 오기
-   // 이거 도저히 k 안 쓰고 못 바꾸겠어요 방법이 안 떠올라요ㅠㅠㅠ
+
+  function randomErase(num){
+    for(let i = 0; i < num; i++){
+      
+    }
+  }
+
+  // 함수에서 하나의 기능만 하게...
 
 // :3줄 안에서 1줄씩 바꾸기(행)
 // :3줄 안에서 1줄씩 바꾸기
@@ -182,15 +194,16 @@ function render() {
 // : 회전하기
 
 
-//rowSwap(2) //숫자 1을 넣으면 랜덤으로 1~3블럭에서 행들이 1번 바뀌고 4~6, 7~9에서도 행이 1번 바뀌어야함 완전 랜덤으로
+//rowSwap(3)
 //colSwap(2)
 //rowBlockSwap(2)
 //colBlockSwap(2)
 //randomSwap(2)
-rotate()
+//rotate()
+execute(rotate, randomNum(4))
 render()
 
-// for문 2중 포문까지
 // 랜덤함수 전부 모아서 크리에이트(가제)라는 함수를 만들기???
-// 전부 고쳐서 오기
-// 목욜날 수업듣고 월요일까지 빈칸 만드는 코드 만들기 (만약 빈칸 만들고 시간 남으면 빈칸 선택된 구역 색 넣는 기능 구현하기)
+// 클릭했을때 css를 바꾸는 형식으로 구현 ::애프터 << 1순위
+// 코드 리팩토링 하기 << 2순위
+// 빈칸 만들기 << 3순위
