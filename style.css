@@ -132,7 +132,15 @@ button{
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     border: 2px solid #333;
-  }
+}
+
+.wrap-block::after{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #93bee5;
+}
 
 .cell {
     display: flex;
@@ -142,6 +150,17 @@ button{
     font-size: 20px;
     font-family: 'Inter', sans-serif;
   }
+
+.cell::after{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #DDD;
+    background: #68b5fe;
+    color: #2290F6;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
 
 .btn-num-select{
     width: 500px;
