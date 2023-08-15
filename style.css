@@ -134,12 +134,76 @@ button{
     border: 2px solid #333;
 }
 
-.wrap-block::after{
+.wrap-block-1{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     border: 2px solid #333;
-    background: #93bee5;
+    background: #e1edf5;
+}
+
+.wrap-block-2{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #e1edf5;
+}
+
+.wrap-block-3{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #e1edf5;
+}
+
+.wrap-block-4{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #e1edf5;
+}
+
+.wrap-block-5{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #e1edf5;
+}
+
+.wrap-block-6{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #e1edf5;
+}
+
+.wrap-block-7{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #e1edf5;
+}
+
+.wrap-block-8{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #e1edf5;
+}
+
+.wrap-block-9{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    background: #e1edf5;
 }
 
 .cell {
@@ -151,13 +215,64 @@ button{
     font-family: 'Inter', sans-serif;
   }
 
-.cell::after{
+.cell-select{
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #DDD;
-    background: #68b5fe;
+    background: #b9e0ff;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.cell-select-empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #DDD;
+    background: #b9e0ff;
     color: #2290F6;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.cell-select-clear{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #DDD;
+    color: #2290F6;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.row-cell-selected{
+    background: #b9e0ff;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #ddd;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.col-cell-selected{
+    background: #b9e0ff;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #ddd;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* 틀렸을때 입력한 숫자 빨간 글씨로 그리고 기존에 있던 숫자는 빨간칸에 빨간 글씨*/
+
+.cell-select-same{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #DDD;
+    background: #d76969;
+    color: #da0e0e;
     font-size: 20px;
     font-family: 'Inter', sans-serif;
 }
