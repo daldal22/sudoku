@@ -25,33 +25,80 @@ let sudoku = [
 </div> */}
 
 const $board = document.querySelector('.sudoku_session');
+let $selectedBlock = null;
+let $selectedNumber = null;
 
 function render() {
-    $board.innerHTML = ''; // 스도쿠 보드 초기화
-  
-    for (let i = 0; i < 9; i++) {
-      const $block = document.createElement('div');
-      $block.classList.add('wrap-block');
-  
-      for (let j = 0; j < 9; j++) {
+    $board.innerHTML = '';
+
+for (let i = 0; i < 9; i++) {
+    const $block = document.createElement('div');
+    $block.className = 'wrap-block';
+
+    for (let j = 0; j < 9; j++) {
         const row = Math.floor(i / 3) * 3 + Math.floor(j / 3);
-        // Math.floor(i / 3) * 3 은 스도쿠 보드 내에서 현재 블록의 첫번째 행 인덱스를 나타냄 0,3,6 중 하나의 값을 가짐 블록을 구분하기 위해 사용
-        // Math.floor(j / 3); 은 현재 블록 내에서 셀의 열 인덱스를 구하는데 사용됌
-        const col = (i % 3) * 3 + (j % 3); 
-        //i % 3 : 현재 블록 내에서 몇 번째 블록의 행에 위치하는지를 나타내는 값
-        //j % 3 : 현재 블록 내에서 몇 번째 블록의 열에 위치하는지를 나타내는 값
-        // 현재 블록 내부에서 각 셀의 열 위치를 나타내는 값을 가지게 된다
+        const col = (i % 3) * 3 + (j % 3);
 
         const cellValue = sudoku[row][col];
         const $cell = document.createElement('p');
-        $cell.classList.add('cell');
-        if (cellValue !== 0) $cell.textContent = cellValue;
+        $cell.className = `cell row-cell-${i + 1} col-cell-${j + 1}`;
+
+        if (cellValue !== 0) {
+            $cell.textContent = cellValue;
+        }
+
+        $cell.addEventListener('click', (e) => {
+          const $clickedCell = e.target;
+         
+          if ($selectedBlock !== null && $selectedBlock !== $clickedCell) {
+            // 이미 선택한 셀이 있을 경우 처리
+            if ($selectedNumber !== null) {
+              $selectedBlock.textContent = $selectedNumber;
+              $selectedNumber = null;
+              // 이미 선택된 셀이 있는 상태에서 숫자 버튼을 클릭한 경우, 선택된 셀의 내용을 $selectedNumber로 업데이트하고 변수를 초기화함
+            }
+            $selectedBlock.classList.remove('cell-select');
+            $selectedBlock.classList.remove('cell-select-empty');
+            $selectedBlock.parentElement.classList.remove(`wrap-block-${$selectedBlock.classList[1].split('-')[2]}`);
+            // `wrap-block-${$selectedBlock.classList[1].split('-')[2]}`
+            // $selectedBlock.classList[1] 셀랙트블록의 2번째 클래스 이름 가져옴 cell / row-cell-${i+1} / ...
+            // split '-' 기준으로 나누고 3번째 요소 가져옴
+          }
+  
+          if (cellValue === 0) {
+            $selectedBlock = $clickedCell;
+            $clickedCell.classList.add('cell-select-empty');
+            $clickedCell.parentElement.classList.add(`wrap-block-${$clickedCell.classList[1].split('-')[2]}`);
+          } else {
+            $selectedBlock = $clickedCell;
+            $clickedCell.classList.add('cell-select');
+            $clickedCell.parentElement.classList.add(`wrap-block-${$clickedCell.classList[1].split('-')[2]}`);
+          }
+        });  
+  
         $block.appendChild($cell);
       }
   
       $board.appendChild($block);
     }
-  }
+  
+    const $numberButtons = document.querySelectorAll('.item-num');
+    $numberButtons.forEach($button => {
+      $button.addEventListener('click', () => {
+        $selectedNumber = $button.textContent;
+        if ($selectedBlock !== null && $selectedNumber !== null) {
+          $selectedBlock.textContent = $selectedNumber;
+          $selectedBlock.classList.remove('cell-select-empty');
+        }
+      });
+  });
+};
+  // 좌표를 준다 [1,1] 선택했을때 랜더 화면을 보여줌??
+  // 클릭했을때마다 클래스가 추가되고 빠지고 해야함
+  // 클릭했을때 타겟으로 받아서
+  // wrap-block을 숫자를 다 붙임 -1 -2 이런 식으로 클래스값을 추가했다 뺐다... 클래스에는 색칠한걸로 변경
+  // 열도 다 숫자를 붙임 행도 숫자를 다 붙임 행 가리키는 셀 열 가리키는 셀 이런식으로 따로 클래스 여러개 만들기!
+  // 클릭했을때 이벤트 다 보이게 다 해오기
   
   function randomNum(num){
     return Math.floor(Math.random()* num)
@@ -179,9 +226,20 @@ function render() {
   } 
 
   function randomErase(num){
-    for(let i = 0; i < num; i++){
-      
+    const emptyIndex = [];
+    let emptyCount = 0;
+
+    while(emptyCount < num){
+      const row = randomNum(9);
+      const col = randomNum(9);
+
+      if(sudoku[row][col] !== 0){
+        emptyIndex.push([row],[col]);
+        sudoku[row][col] = 0;
+        emptyCount++;
+      }
     }
+    return emptyIndex;
   }
 
   // 함수에서 하나의 기능만 하게...
@@ -200,7 +258,8 @@ function render() {
 //colBlockSwap(2)
 //randomSwap(2)
 //rotate()
-execute(rotate, randomNum(4))
+//execute(rotate, randomNum(4))
+randomErase(25)
 render()
 
 // 랜덤함수 전부 모아서 크리에이트(가제)라는 함수를 만들기???
