@@ -29,70 +29,79 @@ let $selectedBlock = null;
 let $selectedNumber = null;
 
 function render() {
-    $board.innerHTML = '';
-
-for (let i = 0; i < 9; i++) {
+  $board.innerHTML = '';
+  
+  for (let i = 0; i < 9; i++) {
     const $block = document.createElement('div');
     $block.className = 'wrap-block';
-
+  
     for (let j = 0; j < 9; j++) {
-        const row = Math.floor(i / 3) * 3 + Math.floor(j / 3);
-        const col = (i % 3) * 3 + (j % 3);
-
-        const cellValue = sudoku[row][col];
-        const $cell = document.createElement('p');
-        $cell.className = `cell row-cell-${i + 1} col-cell-${j + 1}`;
-
-        if (cellValue !== 0) {
-            $cell.textContent = cellValue;
-        }
-
-        $cell.addEventListener('click', (e) => {
-          const $clickedCell = e.target;
-         
-          if ($selectedBlock !== null && $selectedBlock !== $clickedCell) {
-            // 이미 선택한 셀이 있을 경우 처리
-            if ($selectedNumber !== null) {
-              $selectedBlock.textContent = $selectedNumber;
-              $selectedNumber = null;
-              // 이미 선택된 셀이 있는 상태에서 숫자 버튼을 클릭한 경우, 선택된 셀의 내용을 $selectedNumber로 업데이트하고 변수를 초기화함
-            }
-            $selectedBlock.classList.remove('cell-select');
-            $selectedBlock.classList.remove('cell-select-empty');
-            $selectedBlock.parentElement.classList.remove(`wrap-block-${$selectedBlock.classList[1].split('-')[2]}`);
-            // `wrap-block-${$selectedBlock.classList[1].split('-')[2]}`
-            // $selectedBlock.classList[1] 셀랙트블록의 2번째 클래스 이름 가져옴 cell / row-cell-${i+1} / ...
-            // split '-' 기준으로 나누고 3번째 요소 가져옴
-          }
+      const row = Math.floor(i / 3) * 3 + Math.floor(j / 3);
+      const col = (i % 3) * 3 + (j % 3);
   
-          if (cellValue === 0) {
-            $selectedBlock = $clickedCell;
-            $clickedCell.classList.add('cell-select-empty');
-            $clickedCell.parentElement.classList.add(`wrap-block-${$clickedCell.classList[1].split('-')[2]}`);
-          } else {
-            $selectedBlock = $clickedCell;
-            $clickedCell.classList.add('cell-select');
-            $clickedCell.parentElement.classList.add(`wrap-block-${$clickedCell.classList[1].split('-')[2]}`);
-          }
-        });  
+      const cellValue = sudoku[row][col];
+      const $cell = document.createElement('p');
+      $cell.className = `cell row-cell-${i + 1} col-cell-${j + 1}`;
   
-        $block.appendChild($cell);
+      if (cellValue !== 0) {
+        $cell.textContent = cellValue;
       }
   
-      $board.appendChild($block);
-    }
-  
-    const $numberButtons = document.querySelectorAll('.item-num');
-    $numberButtons.forEach($button => {
-      $button.addEventListener('click', () => {
-        $selectedNumber = $button.textContent;
-        if ($selectedBlock !== null && $selectedNumber !== null) {
-          $selectedBlock.textContent = $selectedNumber;
+      $cell.addEventListener('click', (e) => {
+        const $clickedCell = e.target;
+        
+        if ($selectedBlock !== null && $selectedBlock !== $clickedCell) {
+          // 이미 선택한 셀이 있을 경우 처리
+          if ($selectedNumber !== null) {
+            $selectedBlock.textContent = $selectedNumber;
+            $selectedNumber = null;
+            // 이미 선택된 셀이 있는 상태에서 숫자 버튼을 클릭한 경우, 선택된 셀의 내용을 $selectedNumber로 업데이트하고 변수를 초기화함
+          }
+          $selectedBlock.classList.remove('cell-select');
           $selectedBlock.classList.remove('cell-select-empty');
+          $selectedBlock.parentElement.classList.remove(`wrap-block-${$selectedBlock.classList[2].split('-')[2]}`);
+          // `wrap-block-${$selectedBlock.classList[1].split('-')[2]}`
+          // $selectedBlock.classList[1] 셀랙트블록의 2번째 클래스 이름 가져옴 cell / row-cell-${i+1} / ...
+          // split '-' 기준으로 나누고 3번째 요소 가져옴
+          $selectedBlock.classList.remove('row-cell-selected');
+          $selectedBlock.classList.remove('col-cell-selected');
+        }
+  
+        if (cellValue === 0) {
+          $selectedBlock = $clickedCell;
+          $clickedCell.classList.add('cell-select-empty');
+          $clickedCell.parentElement.classList.add(`wrap-block-${$clickedCell.classList[2].split('-')[2]}`);
+          $clickedCell.classList.add('row-cell-selected');
+          $clickedCell.classList.add('col-cell-selected');
+        } else {
+          $selectedBlock = $clickedCell;
+          $clickedCell.classList.add('cell-select');
+          $clickedCell.parentElement.classList.add(`wrap-block-${$clickedCell.classList[2].split('-')[2]}`);
+          $clickedCell.classList.add('row-cell-selected');
+          $clickedCell.classList.add('col-cell-selected');
         }
       });
+  
+      $block.appendChild($cell);
+    }
+  
+    $board.appendChild($block);
+  }
+  
+  const $numberButtons = document.querySelectorAll('.item-num');
+  $numberButtons.forEach($button => {
+    $button.addEventListener('click', () => {
+      $selectedNumber = $button.textContent;
+      // 클릭한 버튼의 내용(텍스트콘텐트)을 $selectedNumber 변수에 저장함
+      if ($selectedBlock !== null && $selectedNumber !== null) { // 선택한 셀과 선택한 숫자가 유효한 경우에
+        $selectedBlock.textContent = $selectedNumber;
+        // 선택한 셀의 내용을 $selectedBlock 변수에 저장한 숫자로 업데이트함
+        $selectedBlock.classList.remove('cell-select-empty');
+        $selectedBlock.classList.add('cell-select-clear')
+      }
+    });
   });
-};
+  }
   // 좌표를 준다 [1,1] 선택했을때 랜더 화면을 보여줌??
   // 클릭했을때마다 클래스가 추가되고 빠지고 해야함
   // 클릭했을때 타겟으로 받아서
